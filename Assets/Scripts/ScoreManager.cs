@@ -36,7 +36,7 @@ public class ScoreManager : MonoBehaviour
     private string _currentPlayerName;
     private string _scoresFilePath;
     private List<ScoreEntry> _scoreList = new List<ScoreEntry>();
-    private int _scoreMaxLength = 10;
+    private int _scoreMaxCount = 10;
     private int _playerNameMaxLength = 11;
 
     void Awake()
@@ -73,9 +73,9 @@ public class ScoreManager : MonoBehaviour
         _scoreList.Sort((a, b) => b.score.CompareTo(a.score));
 
         // Remove additionnal scores from list according to scoreMaxLength
-        if (_scoreList.Count > _scoreMaxLength)
+        if (_scoreList.Count > _scoreMaxCount)
         {
-            _scoreList.RemoveRange(_scoreMaxLength, _scoreList.Count - _scoreMaxLength);
+            _scoreList.RemoveRange(_scoreMaxCount, _scoreList.Count - _scoreMaxCount);
         }
         SaveScores();
     }
