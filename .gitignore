@@ -70,3 +70,9 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# MISC
+*.DS_Store
+
+# Temporary ignore Big Assets Libraries
+Assets/Asset Store/*
