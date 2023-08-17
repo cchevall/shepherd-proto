@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f2ad8df6cc14d11aba67666f02875d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameSpeed: 30
+  _gameSpeed: 30
 --- !u!4 &108566001
 Transform:
   m_ObjectHideFlags: 0
@@ -952,6 +952,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 506857901960781062, guid: 804c9dd00cb184977a4a9194525d2aac, type: 3}
+      propertyPath: _groundMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 087b6ceb039314783a939333d6eae332, type: 2}
     - target: {fileID: 7758711197220626529, guid: 804c9dd00cb184977a4a9194525d2aac, type: 3}
       propertyPath: m_RootOrder
       value: 3
