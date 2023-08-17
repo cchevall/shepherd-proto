@@ -6,13 +6,6 @@ public class MoveForward : MonoBehaviour
 {
     public float additionalSpeed = 0f;
 
-    private GameManager gameManager;
-
-    private void Start()
-    {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -21,7 +14,11 @@ public class MoveForward : MonoBehaviour
 
     private void MoveObjectForward()
     {
-        float finalSpeed = gameManager.gameSpeed + additionalSpeed;
+        if (!GameManager.isLoaded())
+        {
+            return;
+        }
+        float finalSpeed = GameManager.Instance.gameSpeed + additionalSpeed;
         transform.Translate(Vector3.forward * Time.deltaTime * finalSpeed, Space.Self);
     }
 

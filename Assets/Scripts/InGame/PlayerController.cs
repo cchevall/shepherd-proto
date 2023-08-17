@@ -32,6 +32,18 @@ public class PlayerController : MonoBehaviour
         {
             Shoot();
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        if (!GameManager.isLoaded())
+        {
+            return;
+        }
+        GameManager.Instance.Pause();
     }
 
     private void Shoot()

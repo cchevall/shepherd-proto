@@ -80,6 +80,14 @@ public class ScoreManager : MonoBehaviour
         SaveScores();
     }
 
+    public bool IsHighScore(int score)
+    {
+        if (_scoreList.Count == 0){
+            return true;
+        }
+        return _scoreList[0].score <= score;
+    }
+
     /**
      * Gets Current scores list from cache
      * Beware to use LoadScores method before retrieving it on first run

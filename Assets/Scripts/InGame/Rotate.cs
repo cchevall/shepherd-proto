@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    public Vector3 axis = Vector3.up;
-    public float rate;
+    [SerializeField] Vector3 axis = Vector3.up;
+    [SerializeField] float rate;
 
-    // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        
+        RotateSelf();
     }
 
-    // Update is called once per frame
-    void Update()
+    void RotateSelf()
     {
         transform.localRotation = Quaternion.AngleAxis(Time.time * rate * 360, axis);
     }
