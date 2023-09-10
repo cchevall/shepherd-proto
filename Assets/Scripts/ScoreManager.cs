@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -9,15 +10,6 @@ public class ScoreManager : MonoBehaviour
     public int currentScore
     {
         get { return _currentScore; }
-        set
-        {
-            if (IsValidScore(value))
-            {
-                _currentScore = value;
-            } else {
-                Debug.LogError("Player Score should be strictly positive");
-            }
-        }
     }
     public string currentPlayerName {
         get { return _currentPlayerName; }
@@ -32,6 +24,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    [SerializeField] TextMeshProUGUI scoreText;
     private int _currentScore;
     private string _currentPlayerName;
     private string _scoresFilePath;
@@ -46,10 +39,26 @@ public class ScoreManager : MonoBehaviour
             _scoresFilePath = Path.Combine(Application.persistentDataPath, "scores.json");
             DontDestroyOnLoad(gameObject);
             LoadScores();
+            scoreText.SetText("0");
             Instance = this;
             return;
         }
         Destroy(gameObject);
+    }
+
+    public static bool isLoaded()
+    {
+        if (Instance != null) {
+            return true;
+        }
+        Debug.LogError("No instance of ScoreManager found.");
+        return false;
+    }
+
+    public void AddOrRemovePointsToScore(int points)
+    {
+        _currentScore += points;
+        scoreText.SetText(_currentScore.ToString());
     }
 
     public bool IsValidPlayerName(string name)
@@ -65,9 +74,18 @@ public class ScoreManager : MonoBehaviour
     /**
      * Add score to board if high enough to be ranked
      */
-    public void AddScore(string playerName, int score)
+    public void AddScoreToBoard()
     {
-        ScoreEntry newScore = new ScoreEntry(playerName, score);
+        if (!IsValidScore(currentScore)) {
+            Debug.LogError("Player score should be strictly positive");
+            return ;
+        }
+        if (!IsValidPlayerName(currentPlayerName)) 
+        {
+            Debug.LogError("Player name should be at least 1 letter long");
+            return ;
+        }
+        ScoreEntry newScore = new ScoreEntry(currentPlayerName, currentScore);
         _scoreList.Add(newScore);
         // Sort List Desc
         _scoreList.Sort((a, b) => b.score.CompareTo(a.score));
