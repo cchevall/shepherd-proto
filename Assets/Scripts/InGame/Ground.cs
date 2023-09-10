@@ -16,7 +16,7 @@ public class Ground : MonoBehaviour
     }
 
     [SerializeField] Material _groundMaterial;
-    float _gameSpeedToTileOffsetRatio = 130f;
+    [SerializeField] float _gameSpeedToTileOffsetRatio = 125f; // helps tile to fit env movements
 
     // Update is called once per frame
     void Update()

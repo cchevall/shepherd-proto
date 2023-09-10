@@ -13,10 +13,24 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public bool isPaused {get; private set;}
+    public bool isPaused {
+        get {
+            return _isPaused;
+        }
+    }
+
+    public bool isGameOver {
+        get {
+            return _isGameOver;
+        }
+    }
 
     [SerializeField] bool _isPaused = false;
     [SerializeField] float _gameSpeed = 30f;
+    [SerializeField] Canvas _userInterface;
+    [SerializeField] Canvas _gameOver;
+
+    private bool _isGameOver = false;
 
     public static bool isLoaded()
     {
@@ -27,6 +41,13 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void GameOver()
+    {
+        Pause();
+        _isGameOver = true;
+        _gameOver.gameObject.SetActive(true);
+    }
+
     public void Pause()
     {
         _isPaused = !_isPaused;
@@ -34,6 +55,15 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
         } else {
             Time.timeScale = 1f;
+        }
+    }
+
+    public void InitGame()
+    {
+        if (_userInterface) {
+            _userInterface.gameObject.SetActive(true);
+        } else {
+            Debug.LogError("No User Interface set");
         }
     }
 

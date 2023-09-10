@@ -54,7 +54,9 @@ public class SpawnManager : MonoBehaviour
     private void SpawnPowerups()
     {
         float randOffset = Random.Range(0f, 25f);
-        Instantiate(powerupPrefab, GetBoundPosition(randOffset), powerupPrefab.transform.rotation);
+        float randomXPos = Random.Range(-50f, 50f);
+        Vector3 position = new Vector3(randomXPos, 1f, spawnZPos + randOffset);
+        Instantiate(powerupPrefab, position, powerupPrefab.transform.rotation);
     }
 
     private void SpawnTrees()
@@ -123,7 +125,7 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            float toWait = Random.Range(30f, 60f);
+            float toWait = Random.Range(5f, 10f);
             yield return new WaitForSeconds(toWait);
             SpawnPowerups();
         }
