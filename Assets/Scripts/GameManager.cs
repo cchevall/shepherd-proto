@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,9 +27,11 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField] bool _isPaused = false;
+    [SerializeField] float _initialGameSpeed = 30f;
     [SerializeField] float _gameSpeed = 30f;
-    [SerializeField] Canvas _userInterface;
-    [SerializeField] Canvas _gameOver;
+    [SerializeField] Canvas _userInterfaceCanvas;
+    [SerializeField] Canvas _gameOverCanvas;
+    [SerializeField] Canvas _pauseCanvas;
 
     private bool _isGameOver = false;
 
@@ -43,9 +46,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Pause();
-        _isGameOver = true;
-        _gameOver.gameObject.SetActive(true);
+        StartCoroutine(EndGame());
     }
 
     public void Pause()
@@ -53,18 +54,53 @@ public class GameManager : MonoBehaviour
         _isPaused = !_isPaused;
         if (_isPaused) {
             Time.timeScale = 0f;
+            _pauseCanvas.gameObject.SetActive(true);
         } else {
             Time.timeScale = 1f;
+            _pauseCanvas.gameObject.SetActive(false);
         }
     }
 
     public void InitGame()
     {
-        if (_userInterface) {
-            _userInterface.gameObject.SetActive(true);
+        if (_userInterfaceCanvas) {
+            _userInterfaceCanvas.gameObject.SetActive(true);
         } else {
             Debug.LogError("No User Interface set");
         }
+    }
+
+    public void Retry()
+    {
+        ResetGame();
+        _userInterfaceCanvas.gameObject.SetActive(true);
+        SceneManager.LoadScene(1);
+    }
+
+    public void GoToTitle()
+    {
+        ResetGame();
+        _userInterfaceCanvas.gameObject.SetActive(false);
+        SceneManager.LoadScene(0);
+    }
+
+    private void ResetGame()
+    {
+        _gameSpeed = _initialGameSpeed;
+        _isPaused = false;
+        _isGameOver = false;
+        _gameOverCanvas.gameObject.SetActive(false);
+        _pauseCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    private IEnumerator EndGame()
+    {
+        _gameSpeed = 0f;
+        _isGameOver = true;
+        yield return new WaitForSeconds(2.5f);
+        _gameOverCanvas.gameObject.SetActive(true);
+        ScoreManager.Instance.AddScoreToBoard();
     }
 
     void Awake()

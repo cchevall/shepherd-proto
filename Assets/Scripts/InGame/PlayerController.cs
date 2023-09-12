@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] PlayerInput playerInput;
     [SerializeField] Transform projectileSpawnPos;
-    [SerializeField] GameObject fartParticles;
+    [SerializeField] GameObject smokeParticles;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform playerMeshTransform;
     [SerializeField] Animator simpleCharacterAnimator;
@@ -24,35 +26,25 @@ public class PlayerController : MonoBehaviour
 
     // Movements states
     [SerializeField] bool canFly = false;
+    private Vector2 leftStickDirection = Vector2.zero;
+    private string latestActionMap = "PlayerOnGround";
 
     void Awake()
     {
-        if (GameManager.isLoaded()) {
+        if (GameManager.isLoaded())
+        {
             GameManager.Instance.InitGame();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (GameManager.isLoaded() && GameManager.Instance.isGameOver)
-        {
-            return ;
-        }
         MovePlayer();
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire2"))
-        {
-            Shoot();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseGame();
-        }
     }
 
     private void PauseGame()
     {
-        if (!GameManager.isLoaded())
+        if (!GameManager.isLoaded() || GameManager.Instance.isGameOver)
         {
             return;
         }
@@ -61,19 +53,80 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        if (GameManager.isLoaded() && GameManager.Instance.isPaused) {
-            return ;
+        if (GameManager.isLoaded() && (GameManager.Instance.isPaused || GameManager.Instance.isGameOver))
+        {
+            return;
         }
         Instantiate(projectilePrefab, projectileSpawnPos.position, transform.rotation);
         simpleCharacterAnimator.Play("GrenadeThrow", -1, 0f);
     }
 
+    private void OnJump()
+    {
+        playerInput.SwitchCurrentActionMap("PlayerFlying");
+        smokeParticles.gameObject.SetActive(true);
+    }
+
+    private void OnLand()
+    {
+        playerInput.SwitchCurrentActionMap("PlayerOnGround");
+        smokeParticles.gameObject.SetActive(false);
+        LandOnGround();
+    }
+
+    /**
+     * Called by input system
+     */
+    private void OnMove(InputValue value)
+    {
+        leftStickDirection = value.Get<Vector2>();
+    }
+
+    private void OnFire()
+    {
+        Shoot();
+    }
+
+    private void OnPause()
+    {
+        latestActionMap = playerInput.currentActionMap.name;
+        PauseGame();
+        playerInput.SwitchCurrentActionMap("Pause");
+    }
+
+    private void OnResume()
+    {
+        PauseGame();
+        playerInput.SwitchCurrentActionMap(latestActionMap);
+    }
+
+    private void OnRetry()
+    {
+        if (GameManager.isLoaded())
+        {
+            GameManager.Instance.Retry();
+        }
+    }
+
+    private void OnGoToTitle()
+    {
+        if (GameManager.isLoaded())
+        {
+            GameManager.Instance.GoToTitle();
+        }
+    }
+
     private void MovePlayer()
     {
-        float horizontalAxis = Input.GetAxis("Horizontal");
-        float verticalAxis = Input.GetAxis("Vertical");
+        if (GameManager.isLoaded() && (GameManager.Instance.isPaused || GameManager.Instance.isGameOver))
+        {
+            return;
+        }
+        float horizontalAxis = leftStickDirection.x;
+        float verticalAxis = leftStickDirection.y;
         HandlePlayerRotation(horizontalAxis, verticalAxis);
-        if (canFly) {
+        if (playerInput.currentActionMap.name == "PlayerFlying")
+        {
             HandlePlayerMovement(0f, verticalAxis);
         }
         HandlePlayerMovement(horizontalAxis, 0f);
@@ -86,10 +139,13 @@ public class PlayerController : MonoBehaviour
         if (ShouldRotateX(verAxis))
         {
             // it is important to split rotation in to method call to prevent cross-contamination
-            if (ShouldEaseLandingRotation(verAxis)) {
+            if (ShouldEaseLandingRotation(verAxis))
+            {
                 Vector3 rotation = new Vector3(rotateX, 0f, 0f);
                 transform.Rotate(rotation, Space.World); // this one is important to prevent z axis rotation
-            } else {
+            }
+            else
+            {
                 Vector3 rotation = new Vector3(rotateX * -1, 0f, 0f);
                 transform.Rotate(rotation, Space.World); // this one is important to prevent z axis rotation
             }
@@ -110,7 +166,8 @@ public class PlayerController : MonoBehaviour
 
     private bool ShouldRotateX(float verAxis)
     {
-        if (ShouldEaseLandingRotation(verAxis)){
+        if (ShouldEaseLandingRotation(verAxis))
+        {
             return true;
         }
         if (transform.rotation.x > -xAxisMaxRotation && transform.rotation.x < xAxisMaxRotation)
@@ -191,12 +248,10 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            fartParticles.gameObject.SetActive(false);
             simpleCharacterAnimator.SetBool("Grounded_b", true);
         }
         else
         {
-            fartParticles.gameObject.SetActive(true);
             simpleCharacterAnimator.SetBool("Grounded_b", false);
         }
     }
@@ -204,9 +259,7 @@ public class PlayerController : MonoBehaviour
     private void HandleObstacleCollision(Collider other)
     {
         Debug.Log("Player Collided with Obstacle");
-        if (GameManager.isLoaded()) {
-            GameManager.Instance.GameOver();
-        }
+        Die();
     }
 
     private void HandleProjectileCollision(Collider other)
@@ -224,5 +277,36 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player Collided with Powerup");
         canFly = true;
         Destroy(other.gameObject);
+    }
+
+    private void Die()
+    {
+        simpleCharacterAnimator.SetBool("Death_b", true);
+        smokeParticles.gameObject.SetActive(false);
+        LandOnGround();
+        if (GameManager.isLoaded())
+        {
+            GameManager.Instance.GameOver();
+            playerInput.SwitchCurrentActionMap("GameOver");
+        }
+    }
+
+
+    private void LandOnGround()
+    {
+        StartCoroutine(LandOnGroundCoroutine(transform, transform.position, new Vector3(transform.position.x ,2f , 0f)));
+    }
+    private IEnumerator LandOnGroundCoroutine(Transform objectToMove, Vector3 a, Vector3 b)
+    {
+        float speed = 30f;
+        float step = speed / (a - b).magnitude * Time.fixedDeltaTime;
+        float t = 0;
+        while (t <= 1.0f)
+        {
+            t += step; // Goes from 0 to 1, incrementing by step each time
+            objectToMove.position = Vector3.Lerp(a, b, t); // Move objectToMove closer to b
+            yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
+        }
+        objectToMove.position = b;
     }
 }

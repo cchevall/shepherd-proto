@@ -25,8 +25,8 @@ public class ScoreManager : MonoBehaviour
     }
 
     [SerializeField] TextMeshProUGUI scoreText;
-    private int _currentScore;
-    private string _currentPlayerName;
+    private int _currentScore = 0;
+    private string _currentPlayerName = "player";
     private string _scoresFilePath;
     private List<ScoreEntry> _scoreList = new List<ScoreEntry>();
     private int _scoreMaxCount = 10;
@@ -96,6 +96,9 @@ public class ScoreManager : MonoBehaviour
             _scoreList.RemoveRange(_scoreMaxCount, _scoreList.Count - _scoreMaxCount);
         }
         SaveScores();
+        _currentPlayerName = "player";
+        _currentScore = 0;
+        scoreText.SetText("0");
     }
 
     public bool IsHighScore(int score)

@@ -11,29 +11,21 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] rankingArray;
     [SerializeField] bool isRankingShown = false;
 
-    private Coroutine showRankingCoroutine;
-
     private void Start()
     {
         LoadRanking();
-        showRankingCoroutine = StartCoroutine(ShowRanking());
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnStart()
     {
-        if (Input.anyKeyDown)
-        {
-            if (isRankingShown)
-            {
-                HideRanking();
-            }
-            else
-            {
-                StopCoroutine(showRankingCoroutine);
-                SceneManager.LoadScene(1);
-            }
-        }
+        SceneManager.LoadScene(1);
+    }
+
+    void OnShowRanking()
+    {
+        isRankingShown = !isRankingShown;
+        titleScreen.SetActive(!isRankingShown);
+        rankingScreen.SetActive(isRankingShown);
     }
 
     void LoadRanking()
@@ -51,21 +43,5 @@ public class TitleScreenManager : MonoBehaviour
             rankingArray[rankIndex].text = $"{curRank} - {score.playerName} {score.score} pts";
             rankIndex++;
         }
-    }
-
-    void HideRanking()
-    {
-        isRankingShown = false;
-        rankingScreen.SetActive(false);
-        titleScreen.SetActive(true);
-        StartCoroutine(ShowRanking());
-    }
-
-    IEnumerator ShowRanking()
-    {
-        yield return new WaitForSeconds(5);
-        isRankingShown = true;
-        titleScreen.SetActive(false);
-        rankingScreen.SetActive(true);
     }
 }
