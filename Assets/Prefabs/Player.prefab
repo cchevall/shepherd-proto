@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729777037590172635}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.95, y: 1.47, z: 0}
+  m_LocalPosition: {x: 0.95, y: 1.47, z: 1.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -242,7 +242,6 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7560386348643971546, guid: f2a2207b0c57a441b89a481c273e2b74, type: 3}
   playerMeshTransform: {fileID: 6593463090442189306}
   simpleCharacterAnimator: {fileID: 6593463090449372698}
-  canFly: 1
 --- !u!54 &7484434843862710012
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -536,15 +535,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19801442, guid: 834c99069a124aa439d5795c3579843b, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.4433962
+      value: 0.49056602
       objectReference: {fileID: 0}
     - target: {fileID: 19801442, guid: 834c99069a124aa439d5795c3579843b, type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
-      value: 0.43680802
+      value: 0.4581701
       objectReference: {fileID: 0}
     - target: {fileID: 19801442, guid: 834c99069a124aa439d5795c3579843b, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.3994749
+      value: 0.31238875
       objectReference: {fileID: 0}
     - target: {fileID: 19963216, guid: 834c99069a124aa439d5795c3579843b, type: 3}
       propertyPath: m_Materials.Array.size

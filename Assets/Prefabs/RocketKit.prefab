@@ -31,7 +31,7 @@ Transform:
   - {fileID: 1305323464424924918}
   - {fileID: 2714757221552395071}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1555934001690755357
 PrefabInstance:
@@ -189,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7839193671678258118, guid: 2d2b2fd5697d8804fbd9d133ce8f4cec, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8825435929196731285, guid: 2d2b2fd5697d8804fbd9d133ce8f4cec, type: 3}
       propertyPath: m_Materials.Array.size

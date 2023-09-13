@@ -22,12 +22,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerupsRoutine());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     Vector3 GetGroundPosition(Transform prefabPos, float zOffset, float? xRange)
     {
         xRange = (xRange.HasValue ? xRange : xAxisBound);
