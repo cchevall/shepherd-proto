@@ -15,21 +15,17 @@ public class PlayerController : MonoBehaviour
 
     // Movements tuning
     private float rotationSpeed = 200.0f;
-    private float moveSpeed = 30.0f;
+    private float moveSpeed = 50.0f;
     private float xAxisMaxRotation = .20f;
     private float yAxisMaxRotation = .35f;
 
-    // Movements bounderies
-    private float yAxisTopBound = 50f;
-    private float yAxisBottomBound = 1.5f;
-    private float xAxisBound = 35f;
-
     // Movements states
-    [SerializeField] bool canFly = false;
     private Vector2 leftStickDirection = Vector2.zero;
     private string latestActionMap = "PlayerOnGround";
+    private Coroutine landOnGroundCoroutine;
+    private bool landOnGroundCoroutineIsActive = false;
 
-    void Awake()
+    void Start()
     {
         if (GameManager.isLoaded())
         {
@@ -63,6 +59,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump()
     {
+        if (landOnGroundCoroutineIsActive) {
+            landOnGroundCoroutineIsActive = false;
+            StopCoroutine(landOnGroundCoroutine);
+        }
         playerInput.SwitchCurrentActionMap("PlayerFlying");
         smokeParticles.gameObject.SetActive(true);
     }
@@ -207,8 +207,8 @@ public class PlayerController : MonoBehaviour
         float moveOnYAxis = verAxis * Time.deltaTime * moveSpeed;
         float moveOnXAxis = horAxis * Time.deltaTime * moveSpeed;
         transform.Translate(new Vector3(moveOnXAxis, moveOnYAxis, 0f), Space.World);
-        float xPos = Mathf.Clamp(transform.position.x, -xAxisBound, xAxisBound);
-        float yPos = Mathf.Clamp(transform.position.y, yAxisBottomBound, yAxisTopBound);
+        float xPos = Mathf.Clamp(transform.position.x, -LevelConfig.xBound, LevelConfig.xBound);
+        float yPos = Mathf.Clamp(transform.position.y, LevelConfig.yBottomBound, LevelConfig.yTopBound);
         transform.position = new Vector3(xPos, yPos, transform.position.z);
     }
 
@@ -217,10 +217,6 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             HandleObstacleCollision(other);
-        }
-        else if (other.CompareTag("Projectile"))
-        {
-            HandleProjectileCollision(other);
         }
         else if (other.CompareTag("Enemy"))
         {
@@ -262,11 +258,6 @@ public class PlayerController : MonoBehaviour
         Die();
     }
 
-    private void HandleProjectileCollision(Collider other)
-    {
-        Debug.Log("Player Collided with Projectile");
-    }
-
     private void HandleEnemyCollision(Collider other)
     {
         Debug.Log("Player Collided with Enemy");
@@ -275,7 +266,6 @@ public class PlayerController : MonoBehaviour
     private void HandlePowerupCollision(Collider other)
     {
         Debug.Log("Player Collided with Powerup");
-        canFly = true;
         Destroy(other.gameObject);
     }
 
@@ -294,19 +284,24 @@ public class PlayerController : MonoBehaviour
 
     private void LandOnGround()
     {
-        StartCoroutine(LandOnGroundCoroutine(transform, transform.position, new Vector3(transform.position.x ,2f , 0f)));
+        if (landOnGroundCoroutineIsActive) {
+            return ;
+        }
+        landOnGroundCoroutine = StartCoroutine(LandOnGroundCoroutine(transform, transform.position, new Vector3(transform.position.x ,2f , 0f)));
     }
     private IEnumerator LandOnGroundCoroutine(Transform objectToMove, Vector3 a, Vector3 b)
     {
-        float speed = 30f;
-        float step = speed / (a - b).magnitude * Time.fixedDeltaTime;
+        landOnGroundCoroutineIsActive = true;
+        float speed = moveSpeed + 20f;
+        float step = speed / (a - b).magnitude * Time.deltaTime;
         float t = 0;
         while (t <= 1.0f)
         {
             t += step; // Goes from 0 to 1, incrementing by step each time
             objectToMove.position = Vector3.Lerp(a, b, t); // Move objectToMove closer to b
-            yield return new WaitForFixedUpdate();         // Leave the routine and return here in the next frame
+            yield return new WaitForEndOfFrame();         // Leave the routine and return here in the next frame
         }
         objectToMove.position = b;
+        landOnGroundCoroutineIsActive = false;
     }
 }

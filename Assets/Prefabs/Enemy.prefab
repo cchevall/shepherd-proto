@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30159b63d70cb4d8fa4f2c73b9d844a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  additionalSpeed: 50
+  additionalSpeed: 150
 --- !u!1001 &5080611852462124202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -290,4 +290,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 100
+  scorePoints: 100
   explosionPrefab: {fileID: 6094856701674799507, guid: 857356e828d0b4cc68e4a41592e2a42a, type: 3}
