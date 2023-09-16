@@ -5,12 +5,8 @@ using UnityEngine;
 public class DestroyOffLimit : MonoBehaviour
 {
     private float minZPos = -50f;
-    private float maxZPos = 700f;
+    private float maxZPos = LevelConfig.offLimitZPos + 100f;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

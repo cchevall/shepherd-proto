@@ -10,7 +10,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
 
-    private float spawnZPos = 450f;
     private float xAxisBound = 100f;
     private float yAxisTopBound = 50f;
 
@@ -26,14 +25,14 @@ public class SpawnManager : MonoBehaviour
     {
         xRange = (xRange.HasValue ? xRange : xAxisBound);
         float randomXPos = Random.Range((float) -xRange, (float) xRange);
-        return new Vector3(randomXPos, prefabPos.position.y, spawnZPos + zOffset);
+        return new Vector3(randomXPos, prefabPos.position.y, transform.position.z + zOffset);
     }
 
     Vector3 GetAirPosition(float zOffset)
     {
         float randomXPos = Random.Range(-xAxisBound, xAxisBound);
         float randomYPos = Random.Range(5f, yAxisTopBound);
-        return new Vector3(randomXPos, randomYPos, spawnZPos + zOffset);
+        return new Vector3(randomXPos, randomYPos, transform.position.z + zOffset);
     }
 
     Vector3 GetBoundPosition(float zOffset)
@@ -42,14 +41,14 @@ public class SpawnManager : MonoBehaviour
         float yBound = 25f;
         float randomXPos = Random.Range(-xBound, xBound);
         float randomYPos = Random.Range(1f, yBound);
-        return new Vector3(randomXPos, randomYPos, spawnZPos + zOffset);
+        return new Vector3(randomXPos, randomYPos, transform.position.z + zOffset);
     }
 
     private void SpawnPowerups()
     {
         float randOffset = Random.Range(0f, 25f);
         float randomXPos = Random.Range(-50f, 50f);
-        Vector3 position = new Vector3(randomXPos, 1f, spawnZPos + randOffset);
+        Vector3 position = new Vector3(randomXPos, 1f, transform.position.z + randOffset);
         Instantiate(powerupPrefab, position, powerupPrefab.transform.rotation);
     }
 

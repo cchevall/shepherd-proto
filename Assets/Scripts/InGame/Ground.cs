@@ -16,7 +16,9 @@ public class Ground : MonoBehaviour
     }
 
     [SerializeField] Material _groundMaterial;
-    [SerializeField] float _gameSpeedToTileOffsetRatio = 125f; // helps tile to fit env movements
+    [SerializeField] float _gameSpeedToTileOffsetRatio = 180f; // helps tile to fit env movements
+    [SerializeField] float _progress = 0f; // tile offset progress
+
 
     // Update is called once per frame
     void Update()
@@ -32,7 +34,12 @@ public class Ground : MonoBehaviour
         {
             return;
         }
+        Vector2 from = Vector2.zero;
+        Vector2 to = new Vector2(0f, 1f);
         float groundSpeed = GameManager.Instance.gameSpeed / _gameSpeedToTileOffsetRatio;
-        _groundMaterial.mainTextureOffset -= new Vector2(0f, groundSpeed * Time.deltaTime);
+        float step = groundSpeed / (from - to).magnitude * Time.deltaTime;
+        _progress += step;
+        _groundMaterial.mainTextureOffset = new Vector2(0f, -_progress);
+        _progress = _progress % 1f;
     }
 }
