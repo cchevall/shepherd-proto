@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7883278665400662128
 MonoBehaviour:
@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d79ae3c20ff094ef489d9cdc8cefe533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fogWallPrefab: {fileID: 3807465835176570607, guid: 70e874980cb88401caaac0bc246c0218, type: 3}
+  mountainPrefab: {fileID: 4969274962856358468, guid: f1d3ab5a41a8a46bab6278ecabdbf149, type: 3}
   treePrefab: {fileID: 80358346382355786, guid: 7aa941672fd374a619273637168414a0, type: 3}
+  grassPrefabs:
+  - {fileID: 8432879625905592949, guid: 0ef1b93814f7a44719a2acb0d6d11494, type: 3}
+  - {fileID: 608615267156658033, guid: c1938925766a541d1a723e9cb8a7ccde, type: 3}
   rockPrefab: {fileID: 1388011054557470549, guid: 190c2509fefde43f2b2635e7e881f4a3, type: 3}
   shipPrefab: {fileID: 3539888235050886558, guid: 149e2b537745f4ef2bd2a98207c6dc11, type: 3}
   enemyPrefab: {fileID: 2875028037143066211, guid: 96e3f6eabc9284493a53c2885b88ae21, type: 3}
-  powerupPrefab: {fileID: 8689849717551946450, guid: 58a626df3b92f423097a83f8f7d797b3, type: 3}
