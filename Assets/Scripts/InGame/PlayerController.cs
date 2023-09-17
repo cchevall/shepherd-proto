@@ -345,7 +345,6 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            // simpleCharacterAnimator.speed = 1.5f;
             simpleCharacterAnimator.SetBool("Grounded_b", true);
         }
         else
@@ -416,8 +415,6 @@ public class PlayerController : MonoBehaviour
         takeOffCoroutineIsActive = true;
         simpleCharacterAnimator.SetBool("Grounded_b", false);
         yield return new WaitForSeconds(0.5f);
-        // simpleCharacterAnimator.SetBool("Grounded_b", true);
-        // simpleCharacterAnimator.speed = 0.25f;
         takeOffCoroutineIsActive = false;
     }
 

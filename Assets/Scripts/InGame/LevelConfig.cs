@@ -10,4 +10,6 @@ public class LevelConfig
     public static readonly float yTopBound = 60f;
     public static readonly float yBottomBound = 2f;
     public static readonly float offLimitZPos = 800f; // Destroy off limit objects
+    public static readonly float offLimitYTopPos = 800f; // Destroy off limit objects
+    public static readonly float offLimitYBottomPos = -50f; // Destroy off limit objects
 }
