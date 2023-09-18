@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] bool _isStarted = false;
     [SerializeField] bool _isPaused = false;
-    [SerializeField] float _initialGameSpeed = 30f;
-    [SerializeField] float _gameSpeed = 30f;
+    [SerializeField] float _initialGameSpeed = 45f;
+    [SerializeField] float _gameSpeed = 45f;
     [SerializeField] Canvas _userInterfaceCanvas;
     [SerializeField] Canvas _gameOverCanvas;
     [SerializeField] Canvas _pauseCanvas;
