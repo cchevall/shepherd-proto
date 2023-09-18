@@ -23,6 +23,10 @@ public class SmoothFollowTarget : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (GameManager.isLoaded() && (!GameManager.Instance.isStarted || GameManager.Instance.isGameOver || GameManager.Instance.isPaused))
+        {
+            return ;
+        }
         transform.LookAt(aimTransform);
         Vector3 camOffset = playerTransform.position - aimTransform.position;
         Vector3 targetPosition = playerTransform.position + camOffset + new Vector3(0f, 6f, 0f);

@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6542474280025893177
 MeshFilter:
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 087b6ceb039314783a939333d6eae332, type: 2}
+  - {fileID: 2100000, guid: 82db5afb931064a549d9b577abe0d3f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,8 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7335d3fa6b4da452a8a48a0d82307897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundMaterial: {fileID: 2100000, guid: 087b6ceb039314783a939333d6eae332, type: 2}
-  _gameSpeedToTileOffsetRatio: 140
+  _groundMaterial: {fileID: 2100000, guid: 82db5afb931064a549d9b577abe0d3f2, type: 2}
+  _gameSpeedToTileOffsetRatio: 120
+  _progress: 0
 --- !u!65 &238492825657507592
 BoxCollider:
   m_ObjectHideFlags: 0

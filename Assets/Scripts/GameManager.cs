@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject spawnManagerPrefab;
+
     public static GameManager Instance { get; private set; }
     public float gameSpeed {
         get { return _gameSpeed; }
@@ -20,12 +22,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool isStarted {
+        get {
+            return _isStarted;
+        }
+    }
+
     public bool isGameOver {
         get {
             return _isGameOver;
         }
     }
 
+    [SerializeField] bool _isStarted = false;
     [SerializeField] bool _isPaused = false;
     [SerializeField] float _initialGameSpeed = 30f;
     [SerializeField] float _gameSpeed = 30f;
@@ -42,6 +51,14 @@ public class GameManager : MonoBehaviour
         }
         Debug.LogError("No instance of GameManager found.");
         return false;
+    }
+
+    public void BoostGameSpeed(float multiplier)
+    {
+        if (multiplier < 1f) {
+            return ;
+        }
+        _gameSpeed = _initialGameSpeed * multiplier;
     }
 
     public void GameOver()
@@ -63,11 +80,13 @@ public class GameManager : MonoBehaviour
 
     public void InitGame()
     {
+        _isStarted = true;
         if (_userInterfaceCanvas) {
             _userInterfaceCanvas.gameObject.SetActive(true);
         } else {
             Debug.LogError("No User Interface set");
         }
+        Instantiate(spawnManagerPrefab, new Vector3(0f, 10f, 800f), spawnManagerPrefab.transform.rotation);
     }
 
     public void Retry()
@@ -80,17 +99,22 @@ public class GameManager : MonoBehaviour
     public void GoToTitle()
     {
         ResetGame();
-        _userInterfaceCanvas.gameObject.SetActive(false);
         SceneManager.LoadScene(0);
     }
 
     private void ResetGame()
     {
         _gameSpeed = _initialGameSpeed;
+        _isStarted = false;
         _isPaused = false;
         _isGameOver = false;
         _gameOverCanvas.gameObject.SetActive(false);
         _pauseCanvas.gameObject.SetActive(false);
+        if (_userInterfaceCanvas) {
+            _userInterfaceCanvas.gameObject.SetActive(false);
+        } else {
+            Debug.LogError("No User Interface set");
+        }
         Time.timeScale = 1f;
     }
 

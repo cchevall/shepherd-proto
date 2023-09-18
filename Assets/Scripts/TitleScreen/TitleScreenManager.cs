@@ -23,9 +23,12 @@ public class TitleScreenManager : MonoBehaviour
 
     void OnShowRanking()
     {
-        isRankingShown = !isRankingShown;
-        titleScreen.SetActive(!isRankingShown);
-        rankingScreen.SetActive(isRankingShown);
+        if (GameManager.isLoaded() && !GameManager.Instance.isStarted)
+        {
+            isRankingShown = !isRankingShown;
+            titleScreen.SetActive(!isRankingShown);
+            rankingScreen.SetActive(isRankingShown);
+        }
     }
 
     void LoadRanking()

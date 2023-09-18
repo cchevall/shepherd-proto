@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump()
     {
+        if (GameManager.isLoaded() && GameManager.Instance.isGameOver)
+        {
+            return;
+        }
         if (landOnGroundCoroutineIsActive)
         {
             StopCoroutine(landOnGroundCoroutine);
@@ -65,6 +69,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnLand()
     {
+        if (GameManager.isLoaded() && GameManager.Instance.isGameOver)
+        {
+            return;
+        }
         playerInput.SwitchCurrentActionMap("PlayerOnGround");
         smokeParticles.gameObject.SetActive(false);
         LandOnGround();
@@ -75,9 +83,22 @@ public class PlayerController : MonoBehaviour
         leftStickDirection = value.Get<Vector2>();
     }
 
+    private void OnBoost(InputValue value)
+    {
+        if (GameManager.isLoaded() && GameManager.Instance.isGameOver)
+        {
+            return;
+        }
+        if (value.isPressed) {
+            GameManager.Instance.BoostGameSpeed(4f);
+        } else {
+            GameManager.Instance.BoostGameSpeed(1f);
+        }
+    }
+
     private void OnDashLeft()
     {
-        if (isDashing)
+        if ((GameManager.isLoaded() && GameManager.Instance.isGameOver) || isDashing)
         {
             return;
         }
@@ -86,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDashRight()
     {
-        if (isDashing)
+        if ((GameManager.isLoaded() && GameManager.Instance.isGameOver) || isDashing)
         {
             return;
         }

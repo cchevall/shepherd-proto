@@ -22,7 +22,7 @@ public class MoveForward : MonoBehaviour
 
     private void MoveObjectForward()
     {
-        if (!GameManager.isLoaded())
+        if (GameManager.isLoaded() && (!GameManager.Instance.isStarted || GameManager.Instance.isGameOver || GameManager.Instance.isPaused))
         {
             return;
         }
