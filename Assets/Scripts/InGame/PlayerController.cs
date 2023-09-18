@@ -12,6 +12,7 @@ enum Direction
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] GameObject aimAxis;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Transform projectileSpawnPos;
     [SerializeField] GameObject smokeParticles;
@@ -397,7 +398,10 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        LandOnGround();
+        // LandOnGround();
+        aimAxis.gameObject.SetActive(false);
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
         simpleCharacterAnimator.SetBool("Death_b", true);
         smokeParticles.gameObject.SetActive(false);
         if (GameManager.isLoaded())
