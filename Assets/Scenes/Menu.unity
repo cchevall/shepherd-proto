@@ -466,14 +466,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartEnvironment
       objectReference: {fileID: 0}
-    - target: {fileID: 5402807437401451585, guid: 216422fea508e48f49da01986675986c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -3.37
-      objectReference: {fileID: 0}
-    - target: {fileID: 5402807437401451585, guid: 216422fea508e48f49da01986675986c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.47
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -757,9 +749,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 153531608698722312, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570068164306646966, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570068164306646966, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1570068164306646966, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046303531314269573, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2046303531314269573, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 5537094908288985478, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603397615396436043, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603397615396436043, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603397615396436043, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6158195561297417560, guid: 3a414c277024d49d9a75b02f443a098c, type: 3}
       propertyPath: m_RootOrder
@@ -1090,6 +1118,22 @@ PrefabInstance:
     - target: {fileID: 5155842236098906989, guid: 59e487e3010cc430280380d4de934138, type: 3}
       propertyPath: m_Name
       value: Main Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068895289344553525, guid: 59e487e3010cc430280380d4de934138, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068895289344553525, guid: 59e487e3010cc430280380d4de934138, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068895289344553525, guid: 59e487e3010cc430280380d4de934138, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 294
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068895289344553525, guid: 59e487e3010cc430280380d4de934138, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
