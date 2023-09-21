@@ -9,7 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject treePrefab;
     [SerializeField] List<GameObject> cloudPrefabs;
     [SerializeField] List<GameObject> grassPrefabs;
-    [SerializeField] List<GameObject> housePrefabs;
+    [SerializeField] List<GameObject> groundPrefabs;
+    [SerializeField] GameObject tankPrefab;
     [SerializeField] GameObject rockPrefab;
     [SerializeField] GameObject shipPrefab;
     [SerializeField] GameObject enemyPrefab;
@@ -22,7 +23,7 @@ public class SpawnManager : MonoBehaviour
         // StartCoroutine(SpawnObstaclesRoutine());
         StartCoroutine(SpawnEnemiesRoutine());
         SpawnEnvironment();
-        SpawnHousesAndGardens();
+        SpawnGroundArena();
     }
 
     // Spawns Off Limit Environment and Static obstacles
@@ -52,9 +53,9 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnForestRoutine());
     }
 
-    private void SpawnHousesAndGardens()
+    private void SpawnGroundArena()
     {
-        StartCoroutine(SpawnHousesAndGardensRoutine());
+        StartCoroutine(SpawnGroundArenaRoutine());
     }
 
     private void SpawnShips()
@@ -63,23 +64,24 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             float randOffset = Random.Range(60f, 90f);
-            Instantiate(shipPrefab, GetAirPosition(randOffset), shipPrefab.transform.rotation);
+            float randomXPos = Random.Range(-xAxisBound, xAxisBound);
+            float randomYPos = Random.Range(LevelConfig.yTopBound, LevelConfig.yTopBound + 30f);
+            Vector3 airPos = new Vector3(randomXPos, randomYPos, transform.position.z + randOffset);
+            Instantiate(shipPrefab, airPos, shipPrefab.transform.rotation);
         }
     }
 
     private void SpawnStdEnemies()
     {
-        int count = Random.Range(5, 7);
+        int count = Random.Range(1, 4);
         for (int i = 0; i < count; i++)
         {
             float randOffset = Random.Range(10f, 50f);
-            Instantiate(enemyPrefab, GetAirPosition(randOffset), enemyPrefab.transform.rotation);
+            float randomXPos = Random.Range(-xAxisBound, xAxisBound);
+            float randomYPos = Random.Range(40f, LevelConfig.yTopBound);
+            Vector3 airPos = new Vector3(randomXPos, randomYPos, transform.position.z + randOffset);
+            Instantiate(enemyPrefab, airPos, enemyPrefab.transform.rotation);
         }
-    }
-
-    private void SpawnTree()
-    {
-
     }
 
     /**
@@ -110,14 +112,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnHousesAndGardensRoutine()
+    IEnumerator SpawnGroundArenaRoutine()
     {
         while (!GameManager.Instance.isGameOver)
         {
             if (GameManager.Instance.isPaused) {
                 continue;
             }
-            int count = 4;
+            int count = isLucky(70f) ? 4 : 3;
             float houseDepth = 47f;
             float randomDistance = Random.Range(houseDepth * 2f, houseDepth * 3f);
             float range = LevelConfig.xForestBound * 2;
@@ -125,15 +127,11 @@ public class SpawnManager : MonoBehaviour
             float currentPos = LevelConfig.xForestBound - houseDepth;
             for (int i = 0; i < count; i++)
             {
-                if (!isLucky(70f)) {
-                    currentPos -= box;
-                    continue ;
-                }
                 float houseXOffset = Random.Range(5f, 15f);
                 float xPos = currentPos + houseXOffset;
                 float zPos = Random.Range(LevelConfig.offLimitZPos - 30f, LevelConfig.offLimitZPos + 30f);
-                int randIndex = Random.Range(0, housePrefabs.Count);
-                GameObject prefab = housePrefabs[randIndex];
+                int randIndex = Random.Range(0, groundPrefabs.Count);
+                GameObject prefab = groundPrefabs[randIndex];
                 Vector3 prefabPos = new Vector3(xPos, prefab.transform.position.y, zPos);
                 Instantiate(prefab, prefabPos, prefab.transform.rotation);
                 currentPos -= box;
@@ -144,7 +142,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemiesRoutine()
     {
-        while (true)
+        while (!GameManager.Instance.isGameOver)
         {
             if (GameManager.Instance.isPaused) {
                 continue;
@@ -243,7 +241,7 @@ public class SpawnManager : MonoBehaviour
     Vector3 GetAirPosition(float zOffset)
     {
         float randomXPos = Random.Range(-xAxisBound, xAxisBound);
-        float randomYPos = Random.Range(30f, LevelConfig.yTopBound);
+        float randomYPos = Random.Range(LevelConfig.yTopBound, LevelConfig.yTopBound + 30f);
         return new Vector3(randomXPos, randomYPos, transform.position.z + zOffset);
     }
 

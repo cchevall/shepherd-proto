@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d79ae3c20ff094ef489d9cdc8cefe533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fogPrefab: {fileID: 62161991105044518, guid: 0e66a522e0b614d32a34d08c08e435f5, type: 3}
-  fogWallPrefab: {fileID: 3807465835176570607, guid: 70e874980cb88401caaac0bc246c0218, type: 3}
   mountainPrefab: {fileID: 4969274962856358468, guid: f1d3ab5a41a8a46bab6278ecabdbf149, type: 3}
   treePrefab: {fileID: 80358346382355786, guid: 7aa941672fd374a619273637168414a0, type: 3}
   cloudPrefabs:
@@ -58,11 +56,13 @@ MonoBehaviour:
   grassPrefabs:
   - {fileID: 8432879625905592949, guid: 0ef1b93814f7a44719a2acb0d6d11494, type: 3}
   - {fileID: 608615267156658033, guid: c1938925766a541d1a723e9cb8a7ccde, type: 3}
-  housePrefabs:
+  groundPrefabs:
   - {fileID: 8997135034381262302, guid: a887dbb97af4f491c8926b548a4cc38f, type: 3}
   - {fileID: 6683001531645275256, guid: 3a5cff5516b1c4d0e85fac58046f6d3a, type: 3}
   - {fileID: 1676239767175322052, guid: 68c82856116664d9e879fdbb2f62f115, type: 3}
   - {fileID: 5494437070689731627, guid: 550de3e6469874d31a9b6835daf64571, type: 3}
+  - {fileID: 2882226407625573712, guid: 0ed9828fb006049eb9c274e6e245e25c, type: 3}
+  tankPrefab: {fileID: 2882226407625573712, guid: 0ed9828fb006049eb9c274e6e245e25c, type: 3}
   rockPrefab: {fileID: 1388011054557470549, guid: 190c2509fefde43f2b2635e7e881f4a3, type: 3}
   shipPrefab: {fileID: 3539888235050886558, guid: 149e2b537745f4ef2bd2a98207c6dc11, type: 3}
   enemyPrefab: {fileID: 2875028037143066211, guid: 96e3f6eabc9284493a53c2885b88ae21, type: 3}

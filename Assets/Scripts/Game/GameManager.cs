@@ -43,14 +43,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] Canvas _pauseCanvas;
 
     private bool _isGameOver = false;
+    private bool _isGameOverCouroutineDone = true;
 
     public static bool isLoaded()
     {
-        if (Instance != null) {
-            return true;
+        if (Instance == null) {
+            Debug.LogError("No instance of GameManager found.");
+            return false;
         }
-        Debug.LogError("No instance of GameManager found.");
-        return false;
+        return true;
     }
 
     public void BoostGameSpeed(float multiplier)
@@ -91,6 +92,9 @@ public class GameManager : MonoBehaviour
 
     public void Retry()
     {
+        if (!_isGameOverCouroutineDone) {
+            return ;
+        }
         ResetGame();
         _userInterfaceCanvas.gameObject.SetActive(true);
         SceneManager.LoadScene(1);
@@ -98,6 +102,9 @@ public class GameManager : MonoBehaviour
 
     public void GoToTitle()
     {
+        if (!_isGameOverCouroutineDone) {
+            return ;
+        }
         ResetGame();
         SceneManager.LoadScene(0);
     }
@@ -120,11 +127,13 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EndGame()
     {
-        _gameSpeed = 0f;
         _isGameOver = true;
+        _isGameOverCouroutineDone = false;
+        _gameSpeed = 0f;
         yield return new WaitForSeconds(2.5f);
         _gameOverCanvas.gameObject.SetActive(true);
         ScoreManager.Instance.AddScoreToBoard();
+        _isGameOverCouroutineDone = true;
     }
 
     void Awake()

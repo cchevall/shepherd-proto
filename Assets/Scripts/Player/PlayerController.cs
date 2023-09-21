@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 enum Direction
 {
@@ -10,21 +11,35 @@ enum Direction
     right
 }
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHealth
 {
+    public int currentHP {
+        get {
+            return _currentHP;
+        }
+    }
+    public int damageOnCollision {
+        get {
+            return _damageOnCollision;
+        }
+    }
+
+    [SerializeField] int _currentHP = 100;
+    [SerializeField] int _damageOnCollision = 0;
     [SerializeField] GameObject aimAxis;
-    [SerializeField] PlayerInput playerInput;
-    [SerializeField] Transform projectileSpawnPos;
     [SerializeField] GameObject smokeParticles;
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] Transform playerMeshTransform;
+    [SerializeField] GameObject playerMesh;
+    [SerializeField] PlayerInput playerInput;
+    [SerializeField] Transform projectileSpawnPos;
     [SerializeField] Animator simpleCharacterAnimator;
+    [SerializeField] TextMeshProUGUI lifeText;
 
 
     // Movements tuning
-    private float rotationSpeed = 200.0f;
+    private float rotationSpeed = 120.0f;
     private float moveSpeed = 50.0f;
-    private float xAxisMaxRotation = .20f;
+    private float xAxisMaxRotation = .32f;
     private float yAxisMaxRotation = .35f;
     private float dashAmplitude = 20f;
 
@@ -37,11 +52,30 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     private bool isGrounded = true;
 
+    void Awake()
+    {
+        if (lifeText == null) {
+            var UI = GameObject.Find("UI");
+            lifeText = UI.transform.Find("Hud Canvas/Life Text").GetComponent<TextMeshProUGUI>();
+        }
+    }
+
     void Start()
     {
         if (GameManager.isLoaded())
         {
             GameManager.Instance.InitGame();
+            lifeText.SetText(_currentHP.ToString());
+        }
+    }
+
+    public void ApplyDamage(int amount) {
+        _currentHP = _currentHP - amount < 0 ? 0 : _currentHP - amount;
+        lifeText.SetText(_currentHP.ToString());
+        simpleCharacterAnimator.SetTrigger("Get_Hit_t");
+        if (_currentHP <= 0)
+        {
+            Die();
         }
     }
 
@@ -398,16 +432,18 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        // LandOnGround();
+        playerInput.SwitchCurrentActionMap("GameOver");
         aimAxis.gameObject.SetActive(false);
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Rigidbody>().useGravity = true;
         simpleCharacterAnimator.SetBool("Death_b", true);
         smokeParticles.gameObject.SetActive(false);
+        Rigidbody playerRB = playerMesh.GetComponent<Rigidbody>();
+        playerRB.constraints = RigidbodyConstraints.FreezeRotationX;
+        playerRB.isKinematic = false;
+        playerRB.useGravity = true;
+        playerRB.AddForce(new Vector3(0f, -20000f, -20000f));
         if (GameManager.isLoaded())
         {
             GameManager.Instance.GameOver();
-            playerInput.SwitchCurrentActionMap("GameOver");
         }
     }
 
@@ -435,6 +471,7 @@ public class PlayerController : MonoBehaviour
         objectToMove.position = to;
         landOnGroundCoroutineIsActive = false;
     }
+
     private IEnumerator TakeOffCoroutine()
     {
         takeOffCoroutineIsActive = true;
