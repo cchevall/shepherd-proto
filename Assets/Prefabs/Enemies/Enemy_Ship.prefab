@@ -32,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5293498732778381991}
+  - {fileID: 4509712424633857199}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -67,8 +68,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30159b63d70cb4d8fa4f2c73b9d844a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  additionalSpeed: 30
+  additionalSpeed: 150
   moveDirection: 3
+--- !u!1 &6495438832853989066
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4509712424633857199}
+  m_Layer: 0
+  m_Name: Explosion_Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4509712424633857199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6495438832853989066}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.17, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 597597702308635167}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5293498732778256429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,7 +115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100010, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}
       propertyPath: m_RootOrder
@@ -151,6 +183,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100010, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1086349748689614675}
+    - targetCorrespondingSourceObject: {fileID: 100010, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2440710232095965328}
     - targetCorrespondingSourceObject: {fileID: 100008, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1605592176135515632}
@@ -231,6 +266,23 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 5c48649e5fc70484eaab4eabdea710d8, type: 3}
+--- !u!114 &2440710232095965328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5293498732778356359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b330b676e71b440d8bc1221e4023135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentHP: 300
+  _damageOnCollision: 100
+  scorePoints: 500
+  explosionPrefab: {fileID: 6094856701674799507, guid: 857356e828d0b4cc68e4a41592e2a42a, type: 3}
+  explosionTransform: {fileID: 4509712424633857199}
 --- !u!1 &5293498732778356363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: 2a9b1ebd3cb507148833665f977d3fee, type: 3}

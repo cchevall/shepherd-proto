@@ -31,8 +31,9 @@ public class SeekPlayer : MonoBehaviour
             float xTargetPos = playerTransform.position.x + randomNoiseOnXAxis;
             float zTargetPos = playerTransform.position.z + GameManager.Instance.gameSpeed;
             yTargetPos = yTargetPos < LevelConfig.projectilesBottomBound ? LevelConfig.projectilesBottomBound : yTargetPos;
-            Vector3 targetTransform = new Vector3(xTargetPos, yTargetPos, zTargetPos);
-            transform.LookAt(Vector3.SmoothDamp(transform.position, targetTransform, ref velocity, smoothTime));
+            Vector3 targetPosition = new Vector3(xTargetPos, yTargetPos, zTargetPos);
+            Vector3 smoothedPosition = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            transform.LookAt(smoothedPosition);
         }
     }
 
@@ -48,6 +49,9 @@ public class SeekPlayer : MonoBehaviour
     {
         while(!GameManager.Instance.isGameOver && transform.position.z > 50f)
         {
+            if (GameManager.Instance.isPaused) {
+                continue;
+            }
             yield return new WaitForSeconds(smoothTime);
             randomNoiseOnYAxis = Random.Range(-seekNoise, seekNoise);
             randomNoiseOnXAxis = Random.Range(-seekNoise, seekNoise);

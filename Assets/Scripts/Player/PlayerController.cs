@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField] int _damageOnCollision = 0;
     [SerializeField] GameObject aimAxis;
     [SerializeField] GameObject smokeParticles;
+    [SerializeField] GameObject fireParticles;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject playerMesh;
     [SerializeField] PlayerInput playerInput;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour, IHealth
     private float xAxisMaxRotation = .32f;
     private float yAxisMaxRotation = .35f;
     private float dashAmplitude = 20f;
+    private int dangerousHP = 25;
 
     // Movements states
     private Vector2 leftStickDirection = Vector2.zero;
@@ -76,6 +78,20 @@ public class PlayerController : MonoBehaviour, IHealth
         if (_currentHP <= 0)
         {
             Die();
+        } else if (_currentHP <= dangerousHP) {
+            fireParticles.gameObject.SetActive(true);
+            smokeParticles.gameObject.SetActive(false);
+        }
+    }
+
+    public void ApplyHeal(int amount) {
+        _currentHP = _currentHP + amount > 100 ? 100 : _currentHP + amount;
+        lifeText.SetText(_currentHP.ToString());
+        if (_currentHP > dangerousHP) {
+            fireParticles.gameObject.SetActive(false);
+            if (!isGrounded) {
+                smokeParticles.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -99,7 +115,9 @@ public class PlayerController : MonoBehaviour, IHealth
         Vector2 latestLeftStickDir = leftStickDirection;
         playerInput.SwitchCurrentActionMap("PlayerFlying");
         leftStickDirection = latestLeftStickDir; // switching resets stickDirection for some reason;
-        smokeParticles.gameObject.SetActive(true);
+        if (_currentHP > dangerousHP) {
+            smokeParticles.gameObject.SetActive(true);
+        }
     }
 
     private void OnLand()
@@ -436,6 +454,7 @@ public class PlayerController : MonoBehaviour, IHealth
         aimAxis.gameObject.SetActive(false);
         simpleCharacterAnimator.SetBool("Death_b", true);
         smokeParticles.gameObject.SetActive(false);
+        fireParticles.gameObject.SetActive(false);
         Rigidbody playerRB = playerMesh.GetComponent<Rigidbody>();
         playerRB.constraints = RigidbodyConstraints.FreezeRotationX;
         playerRB.isKinematic = false;
@@ -487,8 +506,11 @@ public class PlayerController : MonoBehaviour, IHealth
         float progress = 0;
         Vector3 from = transform.position;
         Vector3 to = direction == Direction.left ? transform.position - new Vector3(dashAmplitude, 0f) : transform.position + new Vector3(dashAmplitude, 0f);
-        while (progress <= 1.0f)
+        while (!GameManager.Instance.isGameOver && progress <= 1.0f)
         {
+            if (GameManager.Instance.isPaused) {
+                continue;
+            }
             float step = speed / (from - to).magnitude * Time.deltaTime;
             progress += step; // Goes from 0 to 1, incrementing by step each time
             transform.position = Vector3.Lerp(from, to, progress); // Move objectToMove closer to b

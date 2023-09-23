@@ -114,12 +114,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4019618070170492296}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.35, z: 4.99}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.17201447, z: 4.6136074}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 584608056422562504}
+  m_Father: {fileID: 584608056422534336}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &584608056422337956
@@ -208,7 +208,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 489324, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8265327126462052588}
-    - targetCorrespondingSourceObject: {fileID: 489324, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 459108, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 792344073596705333}
     m_AddedComponents:
@@ -368,6 +368,11 @@ MonoBehaviour:
   scorePoints: 100
   explosionPrefab: {fileID: 6094856701674799507, guid: 857356e828d0b4cc68e4a41592e2a42a, type: 3}
   explosionTransform: {fileID: 8265327126462052588}
+--- !u!4 &584608056422534336 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 459108, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}
+  m_PrefabInstance: {fileID: 584608056422337956}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &584608056422562504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 489324, guid: aea2a6cdcc9d7944090d528486ebaee1, type: 3}

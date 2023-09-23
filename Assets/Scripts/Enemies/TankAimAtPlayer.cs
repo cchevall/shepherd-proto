@@ -16,6 +16,9 @@ public class TankAimAtPlayer : MonoBehaviour
         LookAtPlayer();
     }
 
+    /**
+     * Update Tank canon rotation to look at player position
+     */
     private void LookAtPlayer()
     {
         if (playerTransform == null || transform.position.z < _zPositionBound) {
@@ -26,6 +29,9 @@ public class TankAimAtPlayer : MonoBehaviour
         transform.LookAt(fixedOnYPlayerPos);
     }
 
+    /**
+     * Instantiate a projectile looking at player position
+     */
     private void Shoot()
     {
         if (transform.position.z < _zPositionBound || GameManager.Instance.isGameOver) {
@@ -45,18 +51,13 @@ public class TankAimAtPlayer : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerTransform = null;
-        }
-    }
-
     private IEnumerator ShootCoroutine()
     {
         while (!GameManager.Instance.isGameOver && transform.position.z > _zPositionBound)
         {
+            if (GameManager.Instance.isPaused) {
+                continue;
+            }
             float randTimeBetweenProjectiles = Random.Range(1f, 2.5f);
             yield return new WaitForSeconds(randTimeBetweenProjectiles);
             Shoot();
