@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject rockPrefab;
     [SerializeField] GameObject shipPrefab;
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject healthPrefab;
 
     private float xAxisBound = 100f;
 
@@ -22,6 +23,7 @@ public class SpawnManager : MonoBehaviour
     {
         // StartCoroutine(SpawnObstaclesRoutine());
         StartCoroutine(SpawnEnemiesRoutine());
+        StartCoroutine(SpawnShipsRoutine());
         SpawnEnvironment();
         SpawnGroundArena();
     }
@@ -51,6 +53,7 @@ public class SpawnManager : MonoBehaviour
     private void SpawnForest()
     {
         StartCoroutine(SpawnForestRoutine());
+        StartCoroutine(SpawnHealthRoutine());
     }
 
     private void SpawnGroundArena()
@@ -60,20 +63,16 @@ public class SpawnManager : MonoBehaviour
 
     private void SpawnShips()
     {
-        int count = Random.Range(1, 4);
-        for (int i = 0; i < count; i++)
-        {
-            float randOffset = Random.Range(60f, 90f);
-            float randomXPos = Random.Range(-xAxisBound, xAxisBound);
-            float randomYPos = Random.Range(LevelConfig.yTopBound, LevelConfig.yTopBound + 30f);
-            Vector3 airPos = new Vector3(randomXPos, randomYPos, transform.position.z + randOffset);
-            Instantiate(shipPrefab, airPos, shipPrefab.transform.rotation);
-        }
+        float randOffset = Random.Range(60f, 90f);
+        float randomXPos = Random.Range(-xAxisBound, xAxisBound);
+        float randomYPos = Random.Range(LevelConfig.yTopBound, LevelConfig.yTopBound + 30f);
+        Vector3 airPos = new Vector3(randomXPos, randomYPos, transform.position.z + randOffset);
+        Instantiate(shipPrefab, airPos, shipPrefab.transform.rotation);
     }
 
     private void SpawnStdEnemies()
     {
-        int count = Random.Range(1, 4);
+        int count = Random.Range(1, 3);
         for (int i = 0; i < count; i++)
         {
             float randOffset = Random.Range(10f, 50f);
@@ -95,7 +94,7 @@ public class SpawnManager : MonoBehaviour
                 continue;
             }
             int count = 4;
-            float treeDistance = 20f;
+            float treeDistance = 25f;
             float randomDistance = Random.Range(treeDistance - 5f, treeDistance + 5f);
             float treeXOffset = (LevelConfig.xBound - LevelConfig.xForestBound) / count;
             for (int i = 0; i < count; i++)
@@ -107,6 +106,32 @@ public class SpawnManager : MonoBehaviour
                 Vector3 rightPos = new Vector3(xPos, treePrefab.transform.position.y, zPos);
                 Instantiate(treePrefab, leftPos, GetRandomYRotation());
                 Instantiate(treePrefab, rightPos, GetRandomYRotation());
+            }
+            yield return new WaitForSeconds(GetWaitTimeFromDepth(randomDistance));
+        }
+    }
+
+    IEnumerator SpawnHealthRoutine()
+    {
+        while (!GameManager.Instance.isGameOver) {
+            if (GameManager.Instance.isPaused) {
+                continue;
+            }
+            float minDistance = GameManager.Instance.gameSpeed * 1;
+            float maxDistance = GameManager.Instance.gameSpeed * 3;
+            float randomDistance = Random.Range(minDistance, maxDistance);
+            float yPos = Random.Range(LevelConfig.yBottomBound, LevelConfig.yTopBound);
+            float xPos = Random.Range(LevelConfig.xForestBound, LevelConfig.xBound);
+            float zPos = LevelConfig.offLimitZPos;
+            Vector3 leftPos = new Vector3(-xPos, yPos, zPos);
+            Vector3 rightPos = new Vector3(xPos, yPos, zPos);
+            if (Physics.CheckSphere(leftPos, healthPrefab.GetComponent<SphereCollider>().radius))
+            {
+                Instantiate(healthPrefab, leftPos, healthPrefab.transform.rotation);
+            }
+            if (Physics.CheckSphere(rightPos, healthPrefab.GetComponent<SphereCollider>().radius))
+            {
+                Instantiate(healthPrefab, rightPos, healthPrefab.transform.rotation);
             }
             yield return new WaitForSeconds(GetWaitTimeFromDepth(randomDistance));
         }
@@ -148,8 +173,19 @@ public class SpawnManager : MonoBehaviour
                 continue;
             }
             SpawnStdEnemies();
+            yield return new WaitForSeconds(Random.Range(1f, 5f));
+        }
+    }
+
+    IEnumerator SpawnShipsRoutine()
+    {
+        while (!GameManager.Instance.isGameOver)
+        {
+            if (GameManager.Instance.isPaused) {
+                continue;
+            }
             SpawnShips();
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(Random.Range(5f, 10f));
         }
     }
 
@@ -236,13 +272,6 @@ public class SpawnManager : MonoBehaviour
     float GetWaitTimeFromDepth(float depth)
     {
         return depth / GameManager.Instance.gameSpeed;
-    }
-
-    Vector3 GetAirPosition(float zOffset)
-    {
-        float randomXPos = Random.Range(-xAxisBound, xAxisBound);
-        float randomYPos = Random.Range(LevelConfig.yTopBound, LevelConfig.yTopBound + 30f);
-        return new Vector3(randomXPos, randomYPos, transform.position.z + zOffset);
     }
 
     /**

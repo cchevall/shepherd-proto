@@ -66,3 +66,4 @@ MonoBehaviour:
   rockPrefab: {fileID: 1388011054557470549, guid: 190c2509fefde43f2b2635e7e881f4a3, type: 3}
   shipPrefab: {fileID: 3539888235050886558, guid: 149e2b537745f4ef2bd2a98207c6dc11, type: 3}
   enemyPrefab: {fileID: 2875028037143066211, guid: 96e3f6eabc9284493a53c2885b88ae21, type: 3}
+  healthPrefab: {fileID: 362213429469634068, guid: efe2d8082ac4b44d2a03727252b5b380, type: 3}

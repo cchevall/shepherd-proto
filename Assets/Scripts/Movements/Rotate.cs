@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
-    [SerializeField] Vector3 axis = Vector3.up;
-    [SerializeField] float rate;
+    [SerializeField] protected Vector3 axis = Vector3.up;
+    [SerializeField] protected float rate;
 
     void Update()
     {
         RotateSelf();
     }
 
-    void RotateSelf()
+    protected void RotateSelf()
     {
         transform.localRotation = Quaternion.AngleAxis(Time.time * rate * 360, axis);
     }
