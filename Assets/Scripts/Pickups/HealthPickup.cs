@@ -20,6 +20,8 @@ public class HealthPickup : MonoBehaviour
     {
         player.GetComponent<PlayerController>().ApplyHeal(healthPoints);
         Instantiate(sparklePrefab, transform.position, sparklePrefab.transform.rotation);
+        SoundManager soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        soundManager.PlayHealthPickupSound();
         Destroy(gameObject);
     }
 }
