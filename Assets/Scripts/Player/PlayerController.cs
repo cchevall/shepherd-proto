@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField] Canvas _userInterfaceCanvas;
     [SerializeField] Canvas _gameOverCanvas;
     [SerializeField] Canvas _pauseCanvas;
+    [SerializeField] AudioSource spatialAudioSource;
+    [SerializeField] List<AudioClip> launchClips;
+    [SerializeField] AudioClip deathClip;
 
 
     // Movements tuning
@@ -214,6 +217,10 @@ public class PlayerController : MonoBehaviour, IHealth
         if (GameManager.isLoaded() && (GameManager.Instance.isPaused || GameManager.Instance.isGameOver))
         {
             return;
+        }
+        if (isLucky(33)) {
+            AudioClip clip = launchClips[Random.Range(0, launchClips.Count)];
+            spatialAudioSource.PlayOneShot(clip);
         }
         Instantiate(projectilePrefab, projectileSpawnPos.position, transform.rotation);
         simpleCharacterAnimator.Play("GrenadeThrow", -1, 0f);
@@ -440,6 +447,7 @@ public class PlayerController : MonoBehaviour, IHealth
     private void Die()
     {
         playerInput.SwitchCurrentActionMap("GameOver");
+        spatialAudioSource.PlayOneShot(deathClip);
         aimAxis.gameObject.SetActive(false);
         simpleCharacterAnimator.SetBool("Death_b", true);
         smokeParticles.gameObject.SetActive(false);
@@ -471,6 +479,12 @@ public class PlayerController : MonoBehaviour, IHealth
         Vector3 positionOnGround = new Vector3(transform.position.x, LevelConfig.yBottomBound, 0f);
         landOnGroundCoroutine = StartCoroutine(LandOnGroundCoroutine(transform, transform.position, positionOnGround));
     }
+
+    private bool isLucky(float percentage)
+    {
+        return Random.Range(0f, 100f) < percentage;
+    }
+
     private IEnumerator LandOnGroundCoroutine(Transform objectToMove, Vector3 from, Vector3 to)
     {
         landOnGroundCoroutineIsActive = true;
