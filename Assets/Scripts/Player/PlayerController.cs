@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField] AudioSource spatialAudioSource;
     [SerializeField] List<AudioClip> launchClips;
     [SerializeField] AudioClip deathClip;
+    [SerializeField] Camera uiCamera;
+    [SerializeField] Camera mainCamera;
 
 
     // Movements tuning
@@ -177,12 +179,16 @@ public class PlayerController : MonoBehaviour, IHealth
         latestActionMap = playerInput.currentActionMap.name;
         PauseGame();
         _pauseCanvas.gameObject.SetActive(true);
+        mainCamera.gameObject.SetActive(false);
+        uiCamera.gameObject.SetActive(true);
         playerInput.SwitchCurrentActionMap("Pause");
     }
 
     private void OnResume()
     {
         PauseGame();
+        mainCamera.gameObject.SetActive(true);
+        uiCamera.gameObject.SetActive(false);
         _pauseCanvas.gameObject.SetActive(false);
         playerInput.SwitchCurrentActionMap(latestActionMap);
     }
@@ -218,7 +224,7 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             return;
         }
-        if (isLucky(33)) {
+        if (!spatialAudioSource.isPlaying && isLucky(50)) {
             AudioClip clip = launchClips[Random.Range(0, launchClips.Count)];
             spatialAudioSource.PlayOneShot(clip);
         }
@@ -468,6 +474,8 @@ public class PlayerController : MonoBehaviour, IHealth
     {
         yield return new WaitForSeconds(2.5f);
         _gameOverCanvas.gameObject.SetActive(true);
+        mainCamera.gameObject.SetActive(false);
+        uiCamera.gameObject.SetActive(true);
     }
 
     private void LandOnGround()

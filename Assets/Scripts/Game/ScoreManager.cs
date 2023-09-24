@@ -107,7 +107,6 @@ public class ScoreManager : MonoBehaviour
         SaveScores();
         _currentPlayerName = "player";
         _currentScore = 0;
-        scoreText.SetText(_currentScore.ToString());
     }
 
     public bool IsHighScore(int score)

@@ -7,9 +7,11 @@ using TMPro;
 public class TitleScreenManager : MonoBehaviour
 {
     [SerializeField] GameObject rankingScreen;
+    [SerializeField] GameObject controlScreen;
     [SerializeField] GameObject titleScreen;
     [SerializeField] TextMeshProUGUI[] rankingArray;
     [SerializeField] bool isRankingShown = false;
+    [SerializeField] bool isControlsShown = false;
 
     private void Start()
     {
@@ -34,8 +36,22 @@ public class TitleScreenManager : MonoBehaviour
         if (GameManager.isLoaded() && !GameManager.Instance.isStarted)
         {
             isRankingShown = !isRankingShown;
+            isControlsShown = false;
             titleScreen.SetActive(!isRankingShown);
+            controlScreen.SetActive(false);
             rankingScreen.SetActive(isRankingShown);
+        }
+    }
+
+    void OnShowControls()
+    {
+        if (GameManager.isLoaded() && !GameManager.Instance.isStarted)
+        {
+            isControlsShown = !isControlsShown;
+            isRankingShown = false;
+            rankingScreen.SetActive(false);
+            titleScreen.SetActive(true);
+            controlScreen.SetActive(isControlsShown);
         }
     }
 
