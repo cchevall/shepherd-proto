@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject spawnManagerPrefab;
+    SoundManager soundManager;
 
     public static GameManager Instance { get; private set; }
     public float gameSpeed {
@@ -70,13 +71,16 @@ public class GameManager : MonoBehaviour
         _isPaused = !_isPaused;
         if (_isPaused) {
             Time.timeScale = 0f;
+            soundManager.PlayPauseSound();
         } else {
             Time.timeScale = 1f;
+            soundManager.PlayResumeSound();
         }
     }
 
     public void InitGame()
     {
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         _isStarted = true;
         Instantiate(spawnManagerPrefab, new Vector3(0f, 10f, 800f), spawnManagerPrefab.transform.rotation);
     }
