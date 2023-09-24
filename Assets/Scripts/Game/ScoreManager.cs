@@ -7,6 +7,16 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
+
+    public TextMeshProUGUI scoreText  {
+        get {
+            return _scoreText;
+        }
+        set {
+            _scoreText = value;
+            _scoreText.SetText(ScoreManager.Instance.currentScore.ToString());
+        }
+    }
     public int currentScore
     {
         get { return _currentScore; }
@@ -24,13 +34,13 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    [SerializeField] TextMeshProUGUI scoreText;
     private int _currentScore = 0;
     private string _currentPlayerName = "player";
     private string _scoresFilePath;
     private List<ScoreEntry> _scoreList = new List<ScoreEntry>();
     private int _scoreMaxCount = 10;
     private int _playerNameMaxLength = 11;
+    private TextMeshProUGUI _scoreText;
 
     void Awake()
     {
@@ -39,7 +49,6 @@ public class ScoreManager : MonoBehaviour
             _scoresFilePath = Path.Combine(Application.persistentDataPath, "scores.json");
             DontDestroyOnLoad(gameObject);
             LoadScores();
-            scoreText.SetText("0");
             Instance = this;
             return;
         }
@@ -98,7 +107,7 @@ public class ScoreManager : MonoBehaviour
         SaveScores();
         _currentPlayerName = "player";
         _currentScore = 0;
-        scoreText.SetText("0");
+        scoreText.SetText(_currentScore.ToString());
     }
 
     public bool IsHighScore(int score)

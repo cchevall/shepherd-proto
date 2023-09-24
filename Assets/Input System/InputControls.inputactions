@@ -226,6 +226,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a4aa0ae1-29a5-4866-97d7-02a1aef6e174",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2a126f66-a4f6-4124-9d74-3f7225c3880c",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
@@ -237,8 +248,30 @@
                 },
                 {
                     "name": "",
+                    "id": "23b53263-ebeb-4cc3-b904-0431590e74e0",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a747e0ad-39ce-463a-9368-c47a29186023",
                     "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dc764db4-81ce-47da-b8cb-2d01b402f9de",
+                    "path": "<Keyboard>/b",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -473,6 +506,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d74cd255-1f1c-4a50-aaf1-d55817488783",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2d6d75b2-07fd-430f-aaaf-2e8bb386ede1",
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
@@ -484,8 +528,30 @@
                 },
                 {
                     "name": "",
+                    "id": "133f1b1a-0964-4201-93bf-31d487140d53",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DashRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f6e93db2-0efc-4258-8ee7-f01a92f6c259",
                     "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "273c808b-56b8-4374-9e31-521fb70a047f",
+                    "path": "<Keyboard>/b",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -512,6 +578,15 @@
                     "name": "ShowRanking",
                     "type": "Button",
                     "id": "32c78037-6794-4efb-b6e2-6b236fcadd41",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "91699a4f-345e-48ac-be8b-7407c87bdd8b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -571,6 +646,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShowRanking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38126be6-05f5-4a51-ad56-fa2caed7a046",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30503f38-9308-4d34-b4c0-6ff03b205b30",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -683,8 +780,30 @@
                 },
                 {
                     "name": "",
+                    "id": "fa838b9d-82f4-4622-a585-22497807e681",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Retry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6f78fbf0-bbb1-4170-bb4e-89c0580d103a",
                     "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GoToTitle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f84963e-ea7b-4f64-92c2-48f6cf9de7be",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
