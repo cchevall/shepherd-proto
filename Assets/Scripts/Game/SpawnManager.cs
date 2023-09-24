@@ -99,7 +99,7 @@ public class SpawnManager : MonoBehaviour
             float treeXOffset = (LevelConfig.xBound - LevelConfig.xForestBound) / count;
             for (int i = 0; i < count; i++)
             {
-                float xOffset = i * treeXOffset + Random.Range(0f, 40f);
+                float xOffset = i * treeXOffset + Random.Range(0f, treeXOffset);
                 float xPos = LevelConfig.xBound - xOffset;
                 float zPos = treeDistance + LevelConfig.offLimitZPos;
                 Vector3 leftPos = new Vector3(-xPos, treePrefab.transform.position.y, zPos);

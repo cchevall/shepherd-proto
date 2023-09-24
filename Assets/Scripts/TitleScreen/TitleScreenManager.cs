@@ -21,6 +21,14 @@ public class TitleScreenManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    void OnExit()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        Application.Quit();
+    }
+
     void OnShowRanking()
     {
         if (GameManager.isLoaded() && !GameManager.Instance.isStarted)

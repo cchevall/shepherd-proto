@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour, IHealth
     [SerializeField] Transform projectileSpawnPos;
     [SerializeField] Animator simpleCharacterAnimator;
     [SerializeField] TextMeshProUGUI lifeText;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] Canvas _userInterfaceCanvas;
+    [SerializeField] Canvas _gameOverCanvas;
+    [SerializeField] Canvas _pauseCanvas;
 
 
     // Movements tuning
@@ -54,20 +58,13 @@ public class PlayerController : MonoBehaviour, IHealth
     private bool isDashing = false;
     private bool isGrounded = true;
 
-    void Awake()
-    {
-        if (lifeText == null) {
-            var UI = GameObject.Find("UI");
-            lifeText = UI.transform.Find("Hud Canvas/Life Text").GetComponent<TextMeshProUGUI>();
-        }
-    }
-
     void Start()
     {
         if (GameManager.isLoaded())
         {
             GameManager.Instance.InitGame();
             lifeText.SetText(_currentHP.ToString());
+            ScoreManager.Instance.scoreText = scoreText;
         }
     }
 
@@ -176,12 +173,14 @@ public class PlayerController : MonoBehaviour, IHealth
     {
         latestActionMap = playerInput.currentActionMap.name;
         PauseGame();
+        _pauseCanvas.gameObject.SetActive(true);
         playerInput.SwitchCurrentActionMap("Pause");
     }
 
     private void OnResume()
     {
         PauseGame();
+        _pauseCanvas.gameObject.SetActive(false);
         playerInput.SwitchCurrentActionMap(latestActionMap);
     }
 
@@ -395,10 +394,6 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             HandleEnemyCollision(other);
         }
-        else if (other.CompareTag("Powerup"))
-        {
-            HandlePowerupCollision(other);
-        }
         else if (other.CompareTag("Ground"))
         {
             isGrounded = true;
@@ -442,12 +437,6 @@ public class PlayerController : MonoBehaviour, IHealth
         Debug.Log("Player Collided with Enemy");
     }
 
-    private void HandlePowerupCollision(Collider other)
-    {
-        Debug.Log("Player Collided with Powerup");
-        Destroy(other.gameObject);
-    }
-
     private void Die()
     {
         playerInput.SwitchCurrentActionMap("GameOver");
@@ -464,6 +453,13 @@ public class PlayerController : MonoBehaviour, IHealth
         {
             GameManager.Instance.GameOver();
         }
+        StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        yield return new WaitForSeconds(2.5f);
+        _gameOverCanvas.gameObject.SetActive(true);
     }
 
     private void LandOnGround()
