@@ -128,6 +128,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &3981581103879165995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 86592493872375457}
+  m_Layer: 0
+  m_Name: Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &86592493872375457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3981581103879165995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4964414420459038536}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6094856701674799507
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +191,7 @@ Transform:
   m_Children:
   - {fileID: 2195099747285859725}
   - {fileID: 6688393485197125143}
+  - {fileID: 86592493872375457}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -175,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debeccaf153534b1bb95639eea856e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionParticle: {fileID: 4833839666949176374}
+  explosionParticle: {fileID: 0}
   spatialAudioSource: {fileID: 4466656050802408956}
   explosionClips:
   - {fileID: 8300000, guid: 2a921313c927f45238a0b8baabe3ab12, type: 3}
@@ -209,6 +241,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4964414420459038536}
     m_Modifications:
+    - target: {fileID: 767280063157902089, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: cullingMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 767280063157902089, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: ShapeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 767280063157902089, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 767280063157902089, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: VelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2732381633971857828, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
       propertyPath: scalingMode
       value: 1
@@ -219,6 +267,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2732381633971857828, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
       propertyPath: InheritVelocityModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037436032392952704, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3264987246894522397, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
@@ -269,6 +321,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Explosion_Rubble
       objectReference: {fileID: 0}
+    - target: {fileID: 5844644735562104736, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7698537761259547483, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
       propertyPath: scalingMode
       value: 1
@@ -288,6 +344,14 @@ PrefabInstance:
     - target: {fileID: 7698537761259547483, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024793483821954456, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8024793483821954456, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
+      propertyPath: m_MotionVectors
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8082871293216776614, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
       propertyPath: scalingMode
@@ -313,10 +377,5 @@ PrefabInstance:
 --- !u!4 &2195099747285859725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3264987246894522397, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
-  m_PrefabInstance: {fileID: 3691015511322254736}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &4833839666949176374 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8082871293216776614, guid: 403d9020fa5e84f66bd6b9259b316795, type: 3}
   m_PrefabInstance: {fileID: 3691015511322254736}
   m_PrefabAsset: {fileID: 0}
