@@ -75,4 +75,4 @@ crashlytics-build.properties
 *.DS_Store
 
 # Temporary ignore Big Assets Libraries
-Assets/Asset Store/*
+# Assets/Asset Store/*
